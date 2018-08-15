@@ -20,7 +20,7 @@ rand = "0.3.18"
 piston_window = "0.74.0"
 
 ### How to play it
-clone the repository, cd into the directory from a terminal or IDE and simply use "cargo run" to play.
+clone the repository, cd into the directory from a terminal or IDE and simply type "cargo run" to play.
 
 
 # Future plans
