@@ -10,8 +10,16 @@ Use the up, down and side arrows to play. Snake moves very slow by itself allowi
 
 
 
-# How to run game
+# Dependencies and how to run game
 
+This project was created using Piston, a 2D graphics tool available in rust. Below are the crates used:
+
+### dependencie
+
+rand = "0.3.18"
+piston_window = "0.74.0"
+
+### How to play it
 clone the repository, cd into the directory from a terminal or IDE and simply use "cargo run" to play.
 
 
