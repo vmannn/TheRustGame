@@ -1,31 +1,25 @@
-use graphics::text::Text;
-use graphics::{DrawsState, Context, Transformed};
 use piston_window::keyboard::Key;
 use std::collections::LinkedList;
 use piston_window::{Context, G2d};
 use piston_window::types::Color;
 use renderings::square_render;
-use renderings::sequence_render;
 use rand::{thread_rng, Rng};
-use opengl_graphics::{GlGraphics, OpenGL};
-use opengl_graphics::glyph_cache::GlyphCache;
 const COLOR: Color = [0.00, 0.80, 0.00, 1.0];
-const ENCLOSURE: Color = [0.80, 0.00, 0.00, 1.0];
 const APPLE_COLOR: Color = [0.80, 0.00, 0.00, 1.0];
 const POISONED_APPLE_COLOR: Color = [0.5, 0.0, 0.00, 1.0];
-const Game_time: f64 = 3.0;
-const Restart_time: f64 = 1.0;
+const GAME_TIME: f64 = 3.0;
+const RESTART_TIME: f64 = 1.0;
 
 
 pub struct Game
 {
-    snake: mysnake,
+    snake: Mysnake,
     lose: bool,
     wait_time: f64,
     apple_rendered: bool,
     applex: i32,
     appley: i32,
-    poisoned_apples: LinkedList<square>,
+    poisoned_apples: LinkedList<Square>,
     score: i32,
 
 
@@ -38,8 +32,8 @@ impl Game
     {
 
 
-       let mut poison: LinkedList<square> = LinkedList::new();
-       poison.push_back(square
+       let mut poison: LinkedList<Square> = LinkedList::new();
+       poison.push_back(Square
        {
            x: 6,
            y: 7,
@@ -49,16 +43,14 @@ impl Game
         Game
         {
 
-            snake: mysnake::create(3,3),
+            snake: Mysnake::create(3,3),
             lose: false,
             wait_time: 0.0,
             apple_rendered: true,
             applex: 3,
             appley: 5,
             poisoned_apples: poison,
-
-
-
+            score: 0,
         }
     }
 
@@ -67,7 +59,6 @@ impl Game
 
     pub fn random_poison_add(&mut self)
     {
-        let mut poisons: LinkedList<square> = LinkedList::new();
 
         let mut random = thread_rng();
         let mut applexx = random.gen_range(1, 14);
@@ -82,11 +73,11 @@ impl Game
 
 
 
-        let pois = (square
+        let pois = Square
         {
             x: applexx,
             y: appleyy,
-        });
+        };
 
         self.poisoned_apples.push_back(pois);
 
@@ -96,26 +87,22 @@ impl Game
 
     pub fn render_poison(&self, g2d: &mut G2d, context: &Context)
     {
-        for square in &self.poisoned_apples
+        for Square in &self.poisoned_apples
         {
 
-            square_render(POISONED_APPLE_COLOR, square.x, square.y, g2d, context);
+            Square_render(POISONED_APPLE_COLOR, Square.x, Square.y, g2d, context);
 
         }
     }
 
-    pub fn drawgame(&self, context: &Context, g2d: &mut G2d, mut gl: &mut GlGraphics,
-               mut glyph_cache: &mut GlyphCache)
+    pub fn drawgame(&self, context: &Context, g2d: &mut G2d)
     {
 
-
-        let transform = context.transform.trans([0], [1]);
-        Text::new_color()
         self.snake.render(g2d, context);
         self.render_poison(g2d, context);
         if self.apple_rendered
         {
-            square_render(APPLE_COLOR, self.applex, self.appley, g2d, context);
+            Square_render(APPLE_COLOR, self.applex, self.appley, g2d, context);
 
 
         }
@@ -130,12 +117,12 @@ impl Game
     pub fn snake_poisoned(&self) -> bool
     {
 
-        for square in &self.snake.snake
+        for Square in &self.snake.snake
         {
 
-            for square2 in &self.poisoned_apples
+            for Square2 in &self.poisoned_apples
             {
-                if square.x == square2.x && square.y == square2.y
+                if Square.x == Square2.x && Square.y == Square2.y
                 {
                     return true;
                 }
@@ -158,14 +145,14 @@ impl Game
         self.wait_time = self.wait_time + time;
 
 
-        let (blockx, blocky): (i32, i32) = self.snake.head_coordinates();
+
 
         if self.lose
         {
-
-            if self.wait_time > Restart_time
+            println!("GAME OVER. Your score is {}", self.score);
+            if self.wait_time > RESTART_TIME
             {
-                self.snake = mysnake::create(3, 3);
+                self.snake = Mysnake::create(3, 3);
                 self.apple_rendered = true;
                 self.applex = 8;
                 self.appley = 8;
@@ -205,18 +192,19 @@ impl Game
 
         }
 
-        if self.wait_time > Game_time{
+        if self.wait_time > GAME_TIME{
             self.snake.advance(None);
             if self.snake_poisoned()
             {
                 self.lose = true;
-                self.snake = mysnake::create(3, 3);
+                println!("GAME OVER. Your score is {}", self.score);
+                self.snake = Mysnake::create(3, 3);
                 self.apple_rendered = true;
                 self.applex = 8;
                 self.appley = 8;
                 self.lose = false;
-                let mut poison: LinkedList<square> = LinkedList::new();
-                poison.push_back(square
+                let mut poison: LinkedList<Square> = LinkedList::new();
+                poison.push_back(Square
                 {
                     x: 6,
                     y: 7,
@@ -258,8 +246,9 @@ impl Game
           if self.snake_poisoned()
           {
               self.lose = true;
-              let mut poison: LinkedList<square> = LinkedList::new();
-              poison.push_back(square
+              println!("GAME OVER. Your score is {}", self.score);
+              let mut poison: LinkedList<Square> = LinkedList::new();
+              poison.push_back(Square
               {
                   x: 6,
                   y: 7,
@@ -299,6 +288,7 @@ impl Game
       }
        else{
            self.lose = true;
+           println!("Your score is {}", self.score);
            self.apple_rendered = false;
        }
 
@@ -310,20 +300,20 @@ impl Game
 
 
 
-pub struct mysnake
+pub struct Mysnake
 {
     direction: Facing,
-    tail: Option<square>,
-    snake: LinkedList<square>,
+    tail: Option<Square>,
+    snake: LinkedList<Square>,
 }
 
-impl mysnake{
-    pub fn create(x: i32, y: i32) -> mysnake
+impl Mysnake{
+    pub fn create(x: i32, y: i32) -> Mysnake
     {
-          let mut snake: LinkedList<square> = LinkedList::new();
+          let mut snake: LinkedList<Square> = LinkedList::new();
 
         snake.push_back(
-            square
+            Square
             {
                 x: x + 2,
                 y,
@@ -332,7 +322,7 @@ impl mysnake{
 
 
         snake.push_back(
-            square
+            Square
             {
                 x: x + 1,
                 y,
@@ -340,14 +330,14 @@ impl mysnake{
         );
 
         snake.push_back(
-            square
+            Square
             {
                 x,
                 y,
             }
         );
 
-       mysnake{
+       Mysnake{
 
            direction: Facing::right,
            snake,
@@ -358,9 +348,9 @@ impl mysnake{
 
     pub fn render(&self, g2d: &mut G2d, context: &Context)
     {
-        for square in &self.snake
+        for Square in &self.snake
         {
-            square_render(COLOR, square.x, square.y, g2d, context);
+            Square_render(COLOR, Square.x, Square.y, g2d, context);
         }
     }
 
@@ -394,8 +384,8 @@ impl mysnake{
 
     pub fn head_coordinates(&self) -> (i32, i32)
     {
-        let top_square = self.snake.front().unwrap();
-        (top_square.x, top_square.y)
+        let top_Square = self.snake.front().unwrap();
+        (top_Square.x, top_Square.y)
     }
 
 
@@ -407,10 +397,10 @@ impl mysnake{
     pub fn overlap(&self, x: i32, y: i32) -> bool
     {
         let mut counter = 0;
-        for square in &self.snake
+        for Square in &self.snake
         {
 
-            if x == square.x && y == square.y
+            if x == Square.x && y == Square.y
             {
                 return true;
             }
@@ -441,36 +431,36 @@ impl mysnake{
 
          let(prevx, prevy): (i32, i32) = self.head_coordinates();
 
-         let adv_square = match self.direction
+         let adv_Square = match self.direction
          {
-             Facing::right => square
+             Facing::right => Square
              {
                  x: prevx + 1,
                  y: prevy,
              },
 
-             Facing::left => square
+             Facing::left => Square
              {
                  x: prevx - 1,
                  y: prevy,
              },
 
 
-             Facing::up => square
+             Facing::up => Square
              {
                  x: prevx,
                  y: prevy - 1,
              },
 
 
-             Facing::down => square
+             Facing::down => Square
              {
                  x: prevx,
                  y: prevy + 1,
              },
          };
 
-         self.snake.push_front(adv_square);
+         self.snake.push_front(adv_Square);
 
          let deletedsq = self.snake.pop_back().unwrap();
          self.tail = Some(deletedsq);
@@ -492,7 +482,7 @@ pub enum Facing
 }
 
 #[derive(Debug, Clone)]
-pub struct square
+pub struct Square
 {
     x: i32,
     y: i32,

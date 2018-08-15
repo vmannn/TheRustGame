@@ -46,7 +46,7 @@ fn main() {
          space.draw_2d(&thing, |context, g2d|
          {
 
-             mygame.drawgame(&context, g2d, &mut gl, &mut glyph_cache);
+             mygame.drawgame(&context, g2d);
 
 
 
