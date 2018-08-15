@@ -543,3 +543,22 @@ fn three_snake_squares()
     assert_eq!(mysnake.snake.len(), 3);
 
 }
+
+//head should be at 5,3 coordinates when beginning
+#[test]
+fn beginning_head_coordinates()
+{
+
+    let mysnake = Mysnake::create(3, 3);
+    assert_eq!(mysnake.head_coordinates(), (5, 3));
+
+
+}
+//next direction towards the right when starting off
+#[test]
+fn next_block_to_travel()
+{
+    let mysnake = Mysnake::create(3,3);
+    assert_eq!(mysnake.next_block(Some(Facing::right)), (6 , 3));
+
+}
