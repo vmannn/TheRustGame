@@ -521,7 +521,7 @@ fn test_for_overlap()
 {
 
     let mygame = Game::new();
-    assert_eq!(mygame.snake.overlap(3, 3), true);
+    assert_eq!(mygame.snake.overlap(4, 3), true);
 
 }
 
