@@ -151,6 +151,7 @@ impl Game
         if self.lose
         {
             println!("GAME OVER. Your score is {}", self.score);
+            self.score = 0;
             if self.wait_time > RESTART_TIME
             {
                 self.snake = Mysnake::create(3, 3);
@@ -199,6 +200,7 @@ impl Game
             {
                 self.lose = true;
                 println!("GAME OVER. Your score is {}", self.score);
+                self.score = 0;
                 self.snake = Mysnake::create(3, 3);
                 self.apple_rendered = true;
                 self.applex = 8;
@@ -248,6 +250,7 @@ impl Game
           {
               self.lose = true;
               println!("GAME OVER. Your score is {}", self.score);
+              self.score = 0;
               let mut poison: LinkedList<Square> = LinkedList::new();
               poison.push_back(Square
               {
@@ -279,7 +282,7 @@ impl Game
               self.apple_rendered = true;
               self.score += 1;
               self.random_poison_add();
-              println!("Add the posion");
+              println!("Add the poison!");
               self.wait_time = 0.0;
 
           }
@@ -290,6 +293,7 @@ impl Game
        else{
            self.lose = true;
            println!("Your score is {}", self.score);
+           self.score = 0;
            self.apple_rendered = false;
        }
 
