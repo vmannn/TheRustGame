@@ -4,20 +4,13 @@ extern crate opengl_graphics;
 extern crate graphics;
 
 
-
-
-use opengl_graphics::{GlGraphics, OpenGL};
-use opengl_graphics::glyph_cache::GlyphCache;
-
-
-
 mod renderings;
 mod game;
 use piston_window::types::Color;
 use piston_window::*;
 use game::Game;
 
-const Background: Color =  [0.00, 0.00, 0.00, 0.00];
+const BACKGROUND: Color =  [0.00, 0.00, 0.00, 0.00];
 
 
 
@@ -31,9 +24,7 @@ fn main() {
 
 
 
-      let opengl = OpenGL::V3_2;
-      let mut gl = GlGraphics::new(opengl);
-    let mut glyph_cache = GlyphCache::new("assets/Roboto-Regular.ttf").expect("Error unwraping fonts");
+
      let mut mygame = Game::new();
      while let Some(thing) = space.next()
      {
@@ -45,7 +36,7 @@ fn main() {
          }
          space.draw_2d(&thing, |context, g2d|
          {
-
+             clear(BACKGROUND, g2d);
              mygame.drawgame(&context, g2d);
 
 

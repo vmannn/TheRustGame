@@ -87,10 +87,10 @@ impl Game
 
     pub fn render_poison(&self, g2d: &mut G2d, context: &Context)
     {
-        for Square in &self.poisoned_apples
+        for square in &self.poisoned_apples
         {
 
-            Square_render(POISONED_APPLE_COLOR, Square.x, Square.y, g2d, context);
+            square_render(POISONED_APPLE_COLOR, square.x, square.y, g2d, context);
 
         }
     }
@@ -102,7 +102,7 @@ impl Game
         self.render_poison(g2d, context);
         if self.apple_rendered
         {
-            Square_render(APPLE_COLOR, self.applex, self.appley, g2d, context);
+            square_render(APPLE_COLOR, self.applex, self.appley, g2d, context);
 
 
         }
@@ -117,12 +117,12 @@ impl Game
     pub fn snake_poisoned(&self) -> bool
     {
 
-        for Square in &self.snake.snake
+        for square in &self.snake.snake
         {
 
-            for Square2 in &self.poisoned_apples
+            for square2 in &self.poisoned_apples
             {
-                if Square.x == Square2.x && Square.y == Square2.y
+                if square.x == square2.x && square.y == square2.y
                 {
                     return true;
                 }
@@ -348,9 +348,9 @@ impl Mysnake{
 
     pub fn render(&self, g2d: &mut G2d, context: &Context)
     {
-        for Square in &self.snake
+        for square in &self.snake
         {
-            Square_render(COLOR, Square.x, Square.y, g2d, context);
+            square_render(COLOR, square.x, square.y, g2d, context);
         }
     }
 
@@ -384,8 +384,8 @@ impl Mysnake{
 
     pub fn head_coordinates(&self) -> (i32, i32)
     {
-        let top_Square = self.snake.front().unwrap();
-        (top_Square.x, top_Square.y)
+        let top_square = self.snake.front().unwrap();
+        (top_square.x, top_square.y)
     }
 
 
@@ -397,10 +397,10 @@ impl Mysnake{
     pub fn overlap(&self, x: i32, y: i32) -> bool
     {
         let mut counter = 0;
-        for Square in &self.snake
+        for square in &self.snake
         {
 
-            if x == Square.x && y == Square.y
+            if x == square.x && y == square.y
             {
                 return true;
             }
@@ -431,7 +431,7 @@ impl Mysnake{
 
          let(prevx, prevy): (i32, i32) = self.head_coordinates();
 
-         let adv_Square = match self.direction
+         let adv_square = match self.direction
          {
              Facing::right => Square
              {
@@ -460,7 +460,7 @@ impl Mysnake{
              },
          };
 
-         self.snake.push_front(adv_Square);
+         self.snake.push_front(adv_square);
 
          let deletedsq = self.snake.pop_back().unwrap();
          self.tail = Some(deletedsq);

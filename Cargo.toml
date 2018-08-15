@@ -6,6 +6,3 @@ authors = ["qwert"]
 [dependencies]
 rand = "0.3.18"
 piston_window = "0.74.0"
-piston2d-opengl_graphics = "0.40.0"
-piston2d-graphics = "*"
-pistoncore-glutin_window ="*"
