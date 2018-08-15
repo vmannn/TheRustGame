@@ -114,6 +114,7 @@ impl Game
     }
 
 
+
     pub fn snake_poisoned(&self) -> bool
     {
 
@@ -472,7 +473,7 @@ impl Mysnake{
 }
 
 
-#[derive(Clone, PartialEq, Copy)]
+#[derive(Clone, PartialEq, Copy, Debug)]
 pub enum Facing
 {
     left,
@@ -488,6 +489,8 @@ pub struct Square
     y: i32,
 }
 
+
+
 impl Facing
 {
     pub fn inverse(&self) -> Facing
@@ -500,4 +503,43 @@ impl Facing
             Facing::down => Facing::up,
         }
     }
+}
+
+
+//snake shouldnt be poisoned at the start of a game
+#[test]
+fn test_snake_poisoned_true()
+{
+    let mygame = Game::new();
+    assert_eq!(mygame.snake_poisoned(), false);
+
+}
+
+//our snake is originally created at coordinates 3, 3 so function should overlap
+#[test]
+fn test_for_overlap()
+{
+
+    let mygame = Game::new();
+    assert_eq!(mygame.snake.overlap(3, 3), true);
+
+}
+
+//snake should be facing right when game begins
+#[test]
+fn test_facing_direction()
+{
+    let mygame = Game::new();
+    assert_eq!(mygame.snake.facing(), Facing::right);
+
+
+}
+
+
+#[test]
+fn three_snake_squares()
+{
+    let mysnake = Mysnake::create(3 , 3);
+    assert_eq!(mysnake.snake.len(), 3);
+
 }
