@@ -4,7 +4,7 @@ This is a simple snake game implemented with an interesting twist. The game feat
 travels as a snake and collects apples. The twist is that there are poisonous apples as well which are designed to be very similar to 
 the original apple. The only difference is a small tint in color so to play the game, you mus keep a sharp eye open. As you collect the regular apples, more and more poisonous apples appear on the screen. The score is currently displayed in the terminal. A fun challenge.
 
-Use the up, down and side arrows to play. Snake moves very slow by itself allowing optimal precision when swerving through poisonous apples.
+Use the up, down and side arrows to play. Snake moves very slow by itself allowing optimal precision when swerving through poisonous apples. There are no borders as it is already difficult enough to dodge the bad apples.
 
 <img src="https://github.com/vmannn/TheRustGame/blob/master/theworm.gif" width="550" height="300" />
 
