@@ -17,3 +17,8 @@ clone the repository, cd into the directory from a terminal or IDE and simply us
 
 Make the score onscreen. I would also like to seperate the game by levels. Perhaps more poisonous apples will appear at a time. Maybe 
 even moving apples. Shortage of time was a factor in class, but I had fun working on my first game in a new language. I plan to continue learning more about Rust in the future.
+
+
+<img src="https://github.com/vmannn/TheRustGame/blob/master/theworm.gif" width="550" height="300" />
+
+
