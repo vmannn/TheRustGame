@@ -5,6 +5,8 @@ travels as a snake and collects apples. The twist is that there are poisonous ap
 the original apple. The only difference is a small tint in color. As you collect the regular apples, more and more poisonous apples appear
 on the screen. The score is currently displayed in the terminal. A fun challenge.
 
+Use the up, down and side arrows to play. Snake moves very slow by itself allowing optimal precision when swerving through poisonous apples.
+
 
 # How to run game
 
