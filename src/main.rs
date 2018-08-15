@@ -1,7 +1,6 @@
 extern crate rand;
 extern crate piston_window;
-extern crate opengl_graphics;
-extern crate graphics;
+
 
 
 mod renderings;
